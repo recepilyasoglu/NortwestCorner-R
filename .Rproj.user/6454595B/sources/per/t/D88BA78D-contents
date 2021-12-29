@@ -1,0 +1,59 @@
+
+nwc=function(ex_matrix){
+  
+  if(sum(is.na(ex_matrix))>0)
+    stop("NA degerler var")
+  
+  Alloc_Matrix=ex_matrix[-nrow(ex_matrix),-ncol(ex_matrix)]
+  Alloc_Matrix[,]=0
+  tr=1
+  tc=1
+  Toplam_Maliyet=0
+  Total_alloc=0
+  colnames(ex_matrix)[ncol(ex_matrix)]="Arz"
+  while(sum(ex_matrix[nrow(ex_matrix),]) != 0 & sum(ex_matrix[,ncol(ex_matrix)]) != 0)
+  {
+    min_curr=min(ex_matrix[tr,ncol(ex_matrix)],ex_matrix[nrow(ex_matrix),tc])
+    ex_matrix[tr,ncol(ex_matrix)]=ex_matrix[tr,ncol(ex_matrix)] - min_curr
+    ex_matrix[nrow(ex_matrix),tc]=ex_matrix[nrow(ex_matrix),tc] - min_curr
+    Alloc_Matrix[tr,tc]=min_curr
+    Toplam_Maliyet=Toplam_Maliyet+(min_curr*ex_matrix[tr,tc])
+    if(ex_matrix[nrow(ex_matrix),tc]==0)
+    {
+      tc=tc+1
+    }else if(ex_matrix[tr,ncol(ex_matrix)]==ex_matrix[nrow(ex_matrix),tc])
+    {
+      tr=tr+1
+      tc=tc+1
+    }else{
+      tr=tr+1
+    }
+    ex_matrix[nrow(ex_matrix),ncol(ex_matrix)]=sum(ex_matrix$Supply[-nrow(ex_matrix)])
+    Total_alloc=Total_alloc+1
+  }
+  
+  output=list()
+  output$Alloc_Matrix=Alloc_Matrix
+  output$Toplam_Maliyet=Toplam_Maliyet
+  
+  # Eger arz ve talep ayni degilse
+  if(sum(ex_matrix[nrow(ex_matrix),]) != 0)
+    output$Dummy_demand=sum(ex_matrix[nrow(ex_matrix),])
+  else if(sum(ex_matrix[,ncol(ex_matrix)]) != 0)
+    output$Dummy_supply=sum(ex_matrix[,ncol(ex_matrix)])
+  
+  if(Total_alloc < (nrow(Alloc_Matrix) + ncol(Alloc_Matrix)-1))
+    warning("Ulasimda Sorun Yasandi")
+  
+  return(output)
+}
+
+ex_matrix=data.frame(M1=c(10,12,4,5),M2=c(2,7,14,15),
+                     M3=c(20,9,16,15),M4=c(11,20,18,15),
+                     Arz=c(15,25,10,50),
+                     row.names = c("W1","W2","W3","Talep"))
+
+
+ex_matrix
+nwc(ex_matrix)
+

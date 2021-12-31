@@ -48,7 +48,7 @@ nwc=function(ex_matrix){
   return(output)
 }
 
-# uygulanacak yöntem icin dataframe turunde veri seti olusturma islemi
+# uygulanacak yÃ¶ntem icin dataframe turunde matris olusturma islemi
 ex_matrix=data.frame(M1=c(10,12,4,5),M2=c(2,7,14,15),
                      M3=c(20,9,16,15),M4=c(11,20,18,15),
                      Arz=c(15,25,10,50),

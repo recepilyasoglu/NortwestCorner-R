@@ -54,7 +54,6 @@ ex_matrix=data.frame(M1=c(10,12,4,5),M2=c(2,7,14,15),
                      Arz=c(15,25,10,50),
                      row.names = c("W1","W2","W3","Talep"))
 
-
 ex_matrix
 nwc(ex_matrix)
 

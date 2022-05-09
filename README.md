@@ -1,4 +1,4 @@
-# Nortwest_Corner
+# NortwestCorner
 
 Kuzey-Batı köşesi yöntemi ile R'da ulaşım problemlerinin yazılımı 
 
